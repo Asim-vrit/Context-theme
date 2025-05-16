@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+:root {
+  --bg-color: red;
+  --text-color: black;
+  --font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+* {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  font-family: var(--font-family);
+}
