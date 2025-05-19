@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext";
+import { useThemeContext } from "../hooks/useContextHooks";
 
 function ColorPickers() {
-  const { setTheme, theme } = useContext(ThemeContext);
+  const { setTheme, theme } = useThemeContext();
+
   function onBgColorChange(hex) {
     console.log("bg", hex);
     setTheme({ ...theme, backgroundColor: hex });
