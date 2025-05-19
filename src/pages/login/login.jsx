@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router";
+import { NavLink } from "react-router";
 import { useAuthContext } from "../../hooks/useContextHooks";
+import axios from "axios";
 
 export default function Login() {
   const { isLoggedIn, login } = useAuthContext();
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   console.log(isLoggedIn);
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
       return;
@@ -16,10 +16,11 @@ export default function Login() {
     if (!password) {
       return;
     }
-    if (email === "sus@gmail.com" && password === "1234") {
+    const data = await axios.get("http://localhost:3000/users");
+    const filteredData = data.data.filter((user) => user.email === email)[0];
+    if (filteredData && filteredData.password === password) {
       console.log("Login successful");
       login("some token");
-      navigate("/products");
     } else {
       console.log("wrong password");
     }
