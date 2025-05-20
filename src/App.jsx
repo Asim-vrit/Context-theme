@@ -8,6 +8,7 @@ import Products from "./pages/products";
 import ProductInnerPage from "./pages/products/[id]";
 import Protected from "./components/Protected";
 import Login from "./pages/login/login";
+import Users from "./pages/users";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
       },
       {
         Component: Protected,
