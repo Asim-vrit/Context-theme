@@ -18,6 +18,9 @@ function Header() {
           <NavLink to={"/products"}>
             <li>Products</li>
           </NavLink>
+          <NavLink to={"/users"}>
+            <li>Users</li>
+          </NavLink>
         </ul>
         <ThemeSwitcher />
       </nav>

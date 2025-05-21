@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
-import { postUsers, updateUser } from "../../../api/routes/users";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
+import { getSingleUser, updateUser } from "../../../api/routes/users";
 import { useEffect } from "react";
 
 const formStyles = {
@@ -8,35 +9,34 @@ const formStyles = {
   labelStyles: "",
 };
 
-function HookForm(props) {
-  const { fetchUsersData, selectedUsers, setSelectedUsers } = props;
+function UpdateForm() {
+  const { id } = useParams();
   const { register, handleSubmit, formState, reset } = useForm();
-
   const { errors } = formState;
-
+  const navigate = useNavigate();
   const customSubmitFunction = async (data) => {
     try {
-      if (selectedUsers) {
-        await updateUser(selectedUsers.id, data);
-      } else await postUsers(data);
-      setSelectedUsers(null);
-      reset({ username: "", password: "", confirmPassword: "" });
-      toast.success("User Added Successfully");
-      fetchUsersData();
+      await updateUser(id, data);
+      toast.success("User Update Successfully");
+      navigate("/users");
     } catch (error) {
       console.log(error);
     }
   };
+  async function fetchUserData() {
+    try {
+      const res = await getSingleUser(id);
+      console.log(res.data);
+      reset(res.data);
+      toast.success("User fetched Successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
-    if (selectedUsers) {
-      reset({
-        username: selectedUsers.username,
-        password: selectedUsers.password,
-        confirmPassword: selectedUsers.password,
-      });
-    }
-  }, [selectedUsers, reset]);
+    fetchUserData();
+  }, [id]);
 
   return (
     <div className="flex justify-center items-center flex-col my-10">
@@ -101,11 +101,11 @@ function HookForm(props) {
         )}
 
         <button className={formStyles.inputStyle} type="submit">
-          {selectedUsers ? "Update" : "Submit"}
+          Update
         </button>
       </form>
     </div>
   );
 }
 
-export default HookForm;
+export default UpdateForm;

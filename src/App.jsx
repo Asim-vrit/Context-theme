@@ -9,6 +9,7 @@ import ProductInnerPage from "./pages/products/[id]";
 import Protected from "./components/Protected";
 import Login from "./pages/login/login";
 import Users from "./pages/users";
+import UpdateUser from "./pages/users/[id]";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
         path: "/users",
         element: <Users />,
       },
+      { path: "/users/:id", element: <UpdateUser /> },
       {
         Component: Protected,
         children: [
